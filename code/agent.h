@@ -39,6 +39,7 @@ public:
 	virtual void notify(const std::string& msg) { meta[msg.substr(0, msg.find('='))] = { msg.substr(msg.find('=') + 1) }; }
 	virtual std::string name() const { return property("name"); }
 	virtual std::string role() const { return property("role"); }
+	//virtual std::string mcts_simulation_count() const { return property("T"); }
 
 protected:
 	typedef std::string key;
@@ -70,10 +71,47 @@ protected:
  * random player for both side
  * put a legal piece randomly
  */
+
+/* original random agent
 class player : public random_agent {
 public:
 	player(const std::string& args = "") : random_agent("name=random role=unknown " + args),
 		space(board::size_x * board::size_y), who(board::empty) {
+		if (name().find_first_of("[]():; ") != std::string::npos)
+			throw std::invalid_argument("invalid name: " + name());
+		if (role() == "black") who = board::black;
+		if (role() == "white") who = board::white;
+		if (who == board::empty)
+			throw std::invalid_argument("invalid role: " + role());
+		for (size_t i = 0; i < space.size(); i++)
+			space[i] = action::place(i, who);
+	}
+
+	virtual action take_action(const board& state) {
+		std::shuffle(space.begin(), space.end(), engine);
+		for (const action::place& move : space) {
+			board after = state;
+			if (move.apply(after) == board::legal)
+				return move;
+		}
+		return action();
+	}
+
+private:
+	std::vector<action::place> space;
+	board::piece_type who;
+};
+*/
+
+class player : public random_agent {
+public:
+	player(const std::string& args = "") : random_agent("name=random role=unknown " + args),
+		space(board::size_x * board::size_y), who(board::empty) {
+		/* +++++++++++++++++++++++++ new add start +++++++++++++++++++++++++ */
+		std::cout << "args are: " << args << std::endl;
+		//if(mcts_simulation_count() == "T")
+
+		/* +++++++++++++++++++++++++ new add end +++++++++++++++++++++++++ */
 		if (name().find_first_of("[]():; ") != std::string::npos)
 			throw std::invalid_argument("invalid name: " + name());
 		if (role() == "black") who = board::black;
