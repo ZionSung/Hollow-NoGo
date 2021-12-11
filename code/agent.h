@@ -100,8 +100,8 @@ public:
 	virtual action take_action(const board& state) {
 		 
 		// test (force to use mcts)
-		mcts_type = T_MCTS;
-		simulation_count = 40;
+		//mcts_type = T_MCTS;
+		//simulation_count = 40;
 
 		if(mcts_type == WITHOUT_MCTS){ // random
 			std::shuffle(space.begin(), space.end(), engine);
@@ -114,11 +114,11 @@ public:
 		}
 		else{ // MCTS
 			UCT uct(who);
-			std::cout << "==============================" << std::endl; 
-			std::cout << "         MOVE: " << who << "\n" << std::endl;
-			std::cout << state << std::endl;
-			std::cout << "==============================" << std::endl; 
-			std::cin.get();
+			//std::cout << "==============================" << std::endl; 
+			//std::cout << "         MOVE: " << who << "\n" << std::endl;
+			//std::cout << state << std::endl;
+			//std::cout << "==============================" << std::endl; 
+			//std::cin.get();
 			action move = uct.UCT_Search(simulation_count, state, space);
 			board after = state;
 			if (move.apply(after) == board::legal){

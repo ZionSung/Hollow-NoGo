@@ -58,7 +58,7 @@ public:
 				return true;
             }
 		}
-        std::cout << "return false -- terminal" << std::endl;
+        //std::cout << "return false -- terminal" << std::endl;
         return false;
     }
 
@@ -69,7 +69,7 @@ public:
                 node->actions.push_back(move);
             }
 		}
-        std::cout << "Node: " << node->id << " all posible actions number: " << node->actions.size() << std::endl;
+        //std::cout << "Node: " << node->id << " all posible actions number: " << node->actions.size() << std::endl;
         //std::cout << "-- pause -- " << std::endl;
         //std::cin.get();
     }
@@ -92,13 +92,13 @@ public:
         v0->id = 0; // root id
         //std::cout << "++++++ state v0 ++++++\n\n" << current_state << std::endl; 
         for(int i = 0; i < simulation_count; i++){
-            std::cout << "Check space[0] is: " << space[0] << std::endl;
+            //std::cout << "Check space[0] is: " << space[0] << std::endl;
             Node *v = Tree_Policy(v0, space);
             //v->id = i+1;
             //std::cout << "++++++ state vl ++++++\n" << v->state << std::endl;
             board::reward reward = Default_Policy(v->state, space);
             Backup_Negamax(v, reward);
-            std::cout << "-- simulation " << i << " finish --" << std::endl;
+            //std::cout << "-- simulation " << i << " finish --" << std::endl;
             //std::cin.get();
         }
         return Best_Child(v0, Cp)->a;
@@ -108,28 +108,28 @@ public:
         Node *temp = new Node;
         temp = v;
         while(temp->id != 0){
-            std::cout << "current id: " << temp->id << std::endl;
-            std::cout << "Old N: " << temp->N;
+            //std::cout << "current id: " << temp->id << std::endl;
+            //std::cout << "Old N: " << temp->N;
             temp->N += 1;
-            std::cout << " -> New N: " << temp->N << std::endl;
-            std::cout << "Old Q: " << temp->Q;
+            //std::cout << " -> New N: " << temp->N << std::endl;
+            //std::cout << "Old Q: " << temp->Q;
             temp->Q += reward;
-            std::cout << " -> New Q: " << temp->Q << std::endl;
+            //td::cout << " -> New Q: " << temp->Q << std::endl;
             reward = -reward;
-            std::cout << "parent id: " << temp->parent->id << std::endl;
+            //std::cout << "parent id: " << temp->parent->id << std::endl;
             temp = temp->parent;
-            std::cout << "-- backup iter -- " << std::endl;
+            //std::cout << "-- backup iter -- " << std::endl;
             //std::cin.get();
         }
         // parent
-        std::cout << "root: " << temp->id << std::endl;
-        std::cout << "Old N: " << temp->N;
+        //std::cout << "root: " << temp->id << std::endl;
+        //std::cout << "Old N: " << temp->N;
         temp->N += 1;
-        std::cout << " -> New N: " << temp->N << std::endl;
-        std::cout << "Old Q: " << temp->Q;
+        //std::cout << " -> New N: " << temp->N << std::endl;
+        //std::cout << "Old Q: " << temp->Q;
         temp->Q += reward;
-        std::cout << " -> New Q: " << temp->Q << std::endl;
-        std::cout << "---- backup end ---- " << std::endl;
+        //std::cout << " -> New Q: " << temp->Q << std::endl;
+        //std::cout << "---- backup end ---- " << std::endl;
     }
 
     bool not_fully_expanded(Node* node){
@@ -171,10 +171,10 @@ public:
     action random_choose_action(board state, std::vector<action::place>& space){
         //std::cout << "+++++ choose action +++++" << std::endl;
         
-        //unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-        //std::shuffle(space.begin(), space.end(), std::default_random_engine(seed));
-        std::default_random_engine engine;
-        std::shuffle(space.begin(), space.end(), engine);
+        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+        std::shuffle(space.begin(), space.end(), std::default_random_engine(seed));
+        //std::default_random_engine engine;
+        //std::shuffle(space.begin(), space.end(), engine);
         for (const action::place& move : space) {
             //std::cout << "+++++ choose action 1 +++++" << std::endl;
             //std::cout << state << std::endl;
@@ -194,12 +194,12 @@ public:
         board after = parent->state;
         action move = choose_action(parent);
         move.apply(after);
-        std::cout << "+++++++++ Expand Node State +++++++++" << std::endl;
+        //std::cout << "+++++++++ Expand Node State +++++++++" << std::endl;
         //std::cout << after << std::endl; 
         Node *child = add_new_node(after, parent);
         space = change_to_another(space);
         update_actions(child, space);
-        std::cout << child->state << std::endl;
+        //std::cout << child->state << std::endl;
         child->a = move;
         (parent->child).push_back(child);
         return child;
@@ -212,52 +212,51 @@ public:
         for(Node* child : v->child){
             double Q = child->Q;
             double N = child->N;
-            std::cout << "paremt ID: " << v->id << std::endl;
-            std::cout << "parent_N:" << parent_N << std::endl;
-            std::cout << "N: " << N << std::endl;
-            std::cout << "Q: " << Q  << std::endl;
-            std::cout << "c: " << c << std::endl;
+            //std::cout << "paremt ID: " << v->id << std::endl;
+            //std::cout << "parent_N:" << parent_N << std::endl;
+            //std::cout << "N: " << N << std::endl;
+            //std::cout << "Q: " << Q  << std::endl;
+            //std::cout << "c: " << c << std::endl;
             //double q_n = Q/N;
             //std::cout << "Q/N: " << q_n << std::endl;
             //double in_sqrt = sqrt( (2*log(parent_N)) / N);
             //std::cout << "In sqrt: " << in_sqrt << std::endl;
             double reward = (Q/N) + (c * (sqrt( (2*log(parent_N)) / N)));
-            std::cout << "ID: " << child->id << " Reward: " << reward << std::endl;
-            std::cout << "-- Best Child iter pause -- " << std::endl;
+            //std::cout << "ID: " << child->id << " Reward: " << reward << std::endl;
+            //std::cout << "-- Best Child iter pause -- " << std::endl;
             //std::cin.get();
             if(reward > highest_reward){
                 highest_reward = reward;
                 best_child = child;
             }
-            std::cout << "test" << std::endl;
         }
-        std::cout << "Inner best child ID: ";
-        std::cout << best_child->id << std::endl;
+        //std::cout << "Inner best child ID: ";
+        //std::cout << best_child->id << std::endl;
         return best_child;
     }
 
     Node *Tree_Policy(Node *v, std::vector<action::place> space){
         while(nonterminal(v->state, space)){
-            std::cout << "=============================================" << std::endl;
-            std::cout << "================ TREE POLICY ================" << std::endl;
-            std::cout << "=============================================" << std::endl;
-            std::cout << v->state << std::endl;
+            //std::cout << "=============================================" << std::endl;
+            //std::cout << "================ TREE POLICY ================" << std::endl;
+            //std::cout << "=============================================" << std::endl;
+            //std::cout << v->state << std::endl;
             if(not_fully_expanded(v)){
                 return Expand(v, space);
             }
             else{
-                std::cout << "======================" << std::endl;
-                std::cout << "      Best Child      " << std::endl;
-                std::cout << "======================" << std::endl;
+                //std::cout << "======================" << std::endl;
+                //std::cout << "      Best Child      " << std::endl;
+                //std::cout << "======================" << std::endl;
                 v = Best_Child(v, Cp);
                 //std::cout << "======================" << std::endl;
                 //std::cout << "   Best Child Pause   " << std::endl;
                 //std::cout << "======================" << std::endl;
 
                 // Change to another player
-                std::cout << "In choosing best child Check space[0] is: " << space[0] << std::endl;
+                //std::cout << "In choosing best child Check space[0] is: " << space[0] << std::endl;
                 space = change_to_another(space);
-                std::cout << "In choosing best child Check space[0] is: " << space[0] << std::endl;
+                //std::cout << "In choosing best child Check space[0] is: " << space[0] << std::endl;
                 /*
                 if(sim_who == board::black){
                     sim_who = board::white;
@@ -267,18 +266,18 @@ public:
                 }
                 */
 
-                std::cout << "Best Child is " << v->id << std::endl;
-                std::cout << v->state << std::endl;
+                //std::cout << "Best Child is " << v->id << std::endl;
+                //std::cout << v->state << std::endl;
                 //update_actions(v, space);
             }
         }
-        std::cout << "Break nonterminal while loop." << std::endl;
+        //std::cout << "Break nonterminal while loop." << std::endl;
         return v;
     }
 
     board::reward Default_Policy(board s, std::vector<action::place> space){
-        std::cout << "\n+++++++++++++++++++++" << std::endl;
-        std::cout << "++   simulations   ++" << std::endl;
+        //std::cout << "\n+++++++++++++++++++++" << std::endl;
+        //std::cout << "++   simulations   ++" << std::endl;
         board::reward reward;
         //std::cout << "Check!" << std::endl;
         /*
@@ -288,9 +287,9 @@ public:
          */
         board::piece_type who = sim_who;
         //std::cout << "who: " << who << std::endl;
-        std::cout << "sim_who: " << sim_who << std::endl;
+        //std::cout << "sim_who: " << sim_who << std::endl;
         space = who_space_sync(sim_who, space);
-        std::cout << "sim_who: " << sim_who << std::endl;
+        //std::cout << "sim_who: " << sim_who << std::endl;
         /*
         for (size_t i = 0; i < space.size(); i++)
 			space[i] = action::place(i, board::white);
@@ -310,21 +309,21 @@ public:
             //std::cin.get();
 
             space = change_to_another(space);
-            std::cout << "loop sim_who: " << sim_who << std::endl;
+            //std::cout << "loop sim_who: " << sim_who << std::endl;
         }
-        std::cout << "last sim_who: " << sim_who << std::endl;
+        //std::cout << "last sim_who: " << sim_who << std::endl;
         if(sim_who == true_player){
-            std::cout << "You Loose..." << std::endl;
+            //std::cout << "You Loose..." << std::endl;
             reward = 0; // you loose
         }
         else{
-            std::cout << "You WIN!" << std::endl;
+            //std::cout << "You WIN!" << std::endl;
             reward = 1; // you win
         }
 
         sim_who = who; // recover
-        std::cout << s << "++ simulations end ++" << std::endl;
-        std::cout << "++*****************++\n" << std::endl;
+        //std::cout << s << "++ simulations end ++" << std::endl;
+        //std::cout << "++*****************++\n" << std::endl;
 
         return reward;
     }
