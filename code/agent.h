@@ -24,7 +24,7 @@
 #define N_MCTS 1
 #define T_MCTS 2
 #define DEFAULT_SIMULATION_COUNT 200
-#define MAX_SIMULATION_COUNT 20000
+#define MAX_SIMULATION_COUNT 8000
 
 class agent {
 public:

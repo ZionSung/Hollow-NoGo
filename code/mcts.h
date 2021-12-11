@@ -371,5 +371,5 @@ private:
     board::piece_type sim_who;
     board::piece_type true_player;
     //std::vector<action> actions;
-    double Cp = 1/(sqrt(2));
+    double Cp = 0;//1/(sqrt(2));
 };
