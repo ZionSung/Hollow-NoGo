@@ -9,6 +9,7 @@
 #include "action.h"
 #include "agent.h"
 
+#define RANDOM_PLAY 10
 
 class MCTS{
 public:
@@ -248,7 +249,7 @@ public:
 
             //double reward = (Q/N) + (c * (sqrt( (2*log(parent_N)) / N)));
             double reward = Q/N;
-            
+
             ////std::cout << "Reward: " << reward << std::endl;
             //double reward = (Q/N);
             ////std::cout << "ID: " << child->id << " Reward: " << reward << std::endl;
@@ -264,10 +265,10 @@ public:
         return best_child;
     }
 
-    board::reward Default_Policy(board s, std::vector<action::place> space){
+    board::reward RandomPlay(board s, std::vector<action::place> space){
         //std::cout << "\n+++++++++++++++++++++" << std::endl;
         //std::cout << "++   simulations   ++" << std::endl;
-        board::reward reward;
+        board::reward reward = 0;
         ////std::cout << "Check!" << std::endl;
         /*
          * Debug:
@@ -315,6 +316,14 @@ public:
         //std::cout << "++ simulations end ++" << std::endl;
         //std::cout << "++*****************++\n" << std::endl;
 
+        return reward;
+    }
+
+    board::reward Default_Policy(board s, std::vector<action::place> space){
+        board::reward reward = 0;
+        for(int i = 0; i < RANDOM_PLAY; i++){
+            reward += RandomPlay(s, space);
+        }
         return reward;
     }
 
