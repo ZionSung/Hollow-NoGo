@@ -116,7 +116,7 @@ public:
             temp->Q += reward;
             //std::cout << " -> New Q: " << temp->Q << std::endl;
 
-            reward = -reward;
+            //reward = -reward;
 
             //std::cout << "parent id: " << temp->parent->id << std::endl;
             temp = temp->parent;
