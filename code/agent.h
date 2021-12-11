@@ -105,6 +105,11 @@ public:
 
 		if(mcts_type == WITHOUT_MCTS){ // random
 			std::shuffle(space.begin(), space.end(), engine);
+			//std::cout << "==============================" << std::endl; 
+			//std::cout << "     RANDOM    MOVE: " << who << "\n" << std::endl;
+			//std::cout << state << std::endl;
+			//std::cout << "==============================" << std::endl;
+			//std::cin.get();
 			for (const action::place& move : space) {
 				board after = state;
 				//std::cout << "random move: " << move << std::endl; 
@@ -115,7 +120,7 @@ public:
 		else{ // MCTS
 			UCT uct(who);
 			//std::cout << "==============================" << std::endl; 
-			//std::cout << "         MOVE: " << who << "\n" << std::endl;
+			//std::cout << "    MCTS INITIAL STATE: " << who << "\n" << std::endl;
 			//std::cout << state << std::endl;
 			//std::cout << "==============================" << std::endl; 
 			//std::cin.get();

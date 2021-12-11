@@ -50,7 +50,9 @@ public:
 	//enum size { size_x = 2u, size_y = 2u, hollow_x = 1u, hollow_y = 1u }; // Success!
 	//enum size { size_x = 2u, size_y = 1u, hollow_x = 0u, hollow_y = 0u }; // Success!
 	//enum size { size_x = 2u, size_y = 2u, hollow_x = 0u, hollow_y = 0u }; // Success!
-	//enum size { size_x = 3u, size_y = 3u, hollow_x = 0u, hollow_y = 0u }; // Success!
+	//enum size { size_x = 3u, size_y = 3u, hollow_x = 1u, hollow_y = 1u }; // Success!
+	//enum size { size_x = 5u, size_y = 5u, hollow_x = 3u, hollow_y = 3u };
+	//enum size { size_x = 8u, size_y = 8u, hollow_x = 0u, hollow_y = 0u };
 	enum size { size_x = 9u, size_y = 9u, hollow_x = 3u, hollow_y = 3u };
 	enum piece_type { empty = 0u, black = 1u, white = 2u, hollow = 3u, unknown = -1u };
 	typedef uint32_t cell;
