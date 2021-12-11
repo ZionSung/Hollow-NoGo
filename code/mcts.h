@@ -9,7 +9,7 @@
 #include "action.h"
 #include "agent.h"
 
-#define RANDOM_PLAY 10
+#define RANDOM_PLAY 5
 
 class MCTS{
 public:
