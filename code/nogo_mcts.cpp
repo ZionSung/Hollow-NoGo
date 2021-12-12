@@ -91,9 +91,9 @@ int main(int argc, const char* argv[]) {
 			black.close_episode(win.name());
 			white.close_episode(win.name());
 			
-			std::cout << "############################" << std::endl;
-			std::cout << "WINNER: " << win.name() << " GAME         " << std::endl;
-			std::cout << "############################" << std::endl;
+			//std::cout << "############################" << std::endl;
+			//std::cout << "WINNER: " << win.name() << " GAME         " << std::endl;
+			//std::cout << "############################" << std::endl;
 			//std::cin.get();
 		}
 	} else { // launch GTP shell

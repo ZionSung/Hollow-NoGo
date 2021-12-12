@@ -23,7 +23,7 @@
 #define WITHOUT_MCTS 0
 #define N_MCTS 1
 #define T_MCTS 2
-#define VOTE 3
+//#define VOTE 3
 #define DEFAULT_SIMULATION_COUNT 200
 #define MAX_SIMULATION_COUNT 12000
 
@@ -128,6 +128,7 @@ public:
 			action move = uct.UCT_Search(simulation_count, state, space);
 			//std::cout << "vote1: " << move;
 			
+			/*
 			for(int i = 0; i < VOTE; i++){
 				action vote2 = uct.UCT_Search(simulation_count, state, space);
 				//std::cout << "vote2: " << vote2;
@@ -150,6 +151,7 @@ public:
 					}
 				}
 			}
+			*/
 
 
 			board after = state;
