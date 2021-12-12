@@ -64,6 +64,10 @@ public:
     }
 
     void update_actions(Node* node, std::vector<action::place> space){
+
+        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+        std::shuffle(space.begin(), space.end(), std::default_random_engine(seed));
+
         for (const action::place& move : space) {
 			board after = node->state; 
 			if (move.apply(after) == board::legal){
@@ -125,7 +129,39 @@ public:
     //std::vector<const action::place&> fully_expanded_nodes; 
     UCT(board::piece_type who) : sim_who(who), true_player(who){} // who is playing now for simuation
 
-    action UCT_Search(int simulation_count, board current_state, std::vector<action::place> space){
+    action UCT_Search_T(int simulation_count, board current_state, std::vector<action::place> space){
+        // create root node V0 with state S0
+        if(!nonterminal(current_state, space)) return action(); // GAME OVER
+        Node *v0 = add_new_node(current_state, nullptr);
+        update_actions(v0, space);
+        v0->id = 0; // root id
+        int backup_id = 0;
+        ////std::cout << "++++++ state v0 ++++++\n\n" << current_state << std::endl; 
+        for(int i = 0; i < simulation_count; i++){
+            ////std::cout << "Check space[0] is: " << space[0] << std::endl;
+            Node *v = Tree_Policy(v0, space);
+            //v->id = i+1;
+            ////std::cout << "++++++ state vl ++++++\n" << v->state << std::endl;
+            board::reward reward = Default_Policy(v->state, space);
+            // " << reward << std::endl;
+            Backup_Negamax(v, reward);
+            //std::cout << "-- simulation " << i << " finish --" << std::endl;
+            //std::cout << v->state << std::endl;
+            if(backup_id == v->id){
+                //std::cout << "!!!!!" << std::endl;
+                //std::cin.get();
+                break;
+            }
+            else{
+                backup_id = v->id;
+            }
+            //std::cin.get();
+            //if(!nonterminal(v->state, space))break;
+        }
+        return Best_Child(v0, Cp)->a;
+    }
+
+    action UCT_Search_N(int simulation_count, board current_state, std::vector<action::place> space){
         // create root node V0 with state S0
         if(!nonterminal(current_state, space)) return action(); // GAME OVER
         Node *v0 = add_new_node(current_state, nullptr);
@@ -138,9 +174,12 @@ public:
             //v->id = i+1;
             ////std::cout << "++++++ state vl ++++++\n" << v->state << std::endl;
             board::reward reward = Default_Policy(v->state, space);
+            // " << reward << std::endl;
             Backup_Negamax(v, reward);
             //std::cout << "-- simulation " << i << " finish --" << std::endl;
+            //std::cout << v->state << std::endl;
             //std::cin.get();
+            //if(!nonterminal(v->state, space))break;
         }
         return Best_Child(v0, Cp)->a;
     }
@@ -176,6 +215,7 @@ public:
     }
 
     Node *Tree_Policy(Node *v, std::vector<action::place> space){
+
         while(nonterminal(v->state, space)){
             ////std::cout << "=============================================" << std::endl;
             ////std::cout << "================ TREE POLICY ================" << std::endl;
@@ -249,8 +289,8 @@ public:
                 best_child = child;
             }
         }
-        ////std::cout << "Inner best child ID: ";
-        ////std::cout << best_child->id << std::endl;
+        //std::cout << "Inner best child ID: ";
+        //std::cout << best_child->id << std::endl;
         return best_child;
     }
 

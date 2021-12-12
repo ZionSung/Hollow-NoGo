@@ -118,42 +118,23 @@ public:
 					return move;
 			}
 		}
-		else{ // MCTS
+		else if(mcts_type == N_MCTS){ // MCTS
 			UCT uct(who);
 			//std::cout << "==============================" << std::endl; 
 			//std::cout << "    MCTS INITIAL STATE: " << who << "\n" << std::endl;
 			//std::cout << state << std::endl;
 			//std::cout << "==============================" << std::endl; 
 			//std::cin.get();
-			action move = uct.UCT_Search(simulation_count, state, space);
-			//std::cout << "vote1: " << move;
-			
-			/*
-			for(int i = 0; i < VOTE; i++){
-				action vote2 = uct.UCT_Search(simulation_count, state, space);
-				//std::cout << "vote2: " << vote2;
-				if(move == vote2){
-					//std::cout << std::endl;
-					break;
-				}
-				else{
-					action vote3 = uct.UCT_Search(simulation_count, state, space);
-					//std::cout << "vote3: " << vote3 << std::endl;
-					if(vote3 == move){
-						break;
-					}
-					else{
-						move = vote3;
-						if(vote3 == vote2){
-							std::cout << "Yes!" << std::endl;
-						}
-						break;
-					}
-				}
+			action move = uct.UCT_Search_N(simulation_count, state, space);
+
+			board after = state;
+			if (move.apply(after) == board::legal){
+				return move;
 			}
-			*/
-
-
+		}
+		else{
+			UCT uct(who);
+			action move = uct.UCT_Search_T(simulation_count, state, space);
 			board after = state;
 			if (move.apply(after) == board::legal){
 				return move;
