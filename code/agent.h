@@ -23,6 +23,7 @@
 #define WITHOUT_MCTS 0
 #define N_MCTS 1
 #define T_MCTS 2
+#define VOTE 3
 #define DEFAULT_SIMULATION_COUNT 200
 #define MAX_SIMULATION_COUNT 12000
 
@@ -125,6 +126,32 @@ public:
 			//std::cout << "==============================" << std::endl; 
 			//std::cin.get();
 			action move = uct.UCT_Search(simulation_count, state, space);
+			//std::cout << "vote1: " << move;
+			
+			for(int i = 0; i < VOTE; i++){
+				action vote2 = uct.UCT_Search(simulation_count, state, space);
+				//std::cout << "vote2: " << vote2;
+				if(move == vote2){
+					//std::cout << std::endl;
+					break;
+				}
+				else{
+					action vote3 = uct.UCT_Search(simulation_count, state, space);
+					//std::cout << "vote3: " << vote3 << std::endl;
+					if(vote3 == move){
+						break;
+					}
+					else{
+						move = vote3;
+						if(vote3 == vote2){
+							std::cout << "Yes!" << std::endl;
+						}
+						break;
+					}
+				}
+			}
+
+
 			board after = state;
 			if (move.apply(after) == board::legal){
 				return move;

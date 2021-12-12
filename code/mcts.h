@@ -189,22 +189,11 @@ public:
                 //std::cout << "       SELECT      " << std::endl;
                 //std::cout << "======================" << std::endl;
                 v = Best_Child(v, Cp);
-                ////std::cout << "======================" << std::endl;
-                ////std::cout << "   Best Child Pause   " << std::endl;
-                ////std::cout << "======================" << std::endl;
 
                 // Change to another player
                 ////std::cout << "In choosing best child Check space[0] is: " << space[0] << std::endl;
                 space = change_to_another(space);
                 ////std::cout << "In choosing best child Check space[0] is: " << space[0] << std::endl;
-                /*
-                if(sim_who == board::black){
-                    sim_who = board::white;
-                }
-                else{
-                    sim_who = board::black;
-                }
-                */
 
                 //std::cout << "Best Child is " << v->id << std::endl;
                 //std::cout << v->state << std::endl;
@@ -237,11 +226,11 @@ public:
         for(Node* child : v->child){
             double Q = child->Q;
             double N = child->N;
-            ////std::cout << "paremt ID: " << v->id << std::endl;
-            ////std::cout << "parent_N:" << parent_N << std::endl;
-            ////std::cout << "N: " << N << std::endl;
-            ////std::cout << "Q: " << Q  << std::endl;
-            ////std::cout << "c: " << c << std::endl;
+            //std::cout << "paremt ID: " << v->id << std::endl;
+            //std::cout << "parent_N:" << parent_N << std::endl;
+            //std::cout << "N: " << N << std::endl;
+            //std::cout << "Q: " << Q  << std::endl;
+            //std::cout << "c: " << c << std::endl;
             //double q_n = Q/N;
             ////std::cout << "Q/N: " << q_n << std::endl;
             //double in_sqrt = sqrt( (2*log(parent_N)) / N);
@@ -250,10 +239,10 @@ public:
             //double reward = (Q/N) + (c * (sqrt( (2*log(parent_N)) / N)));
             double reward = Q/N;
 
-            ////std::cout << "Reward: " << reward << std::endl;
+            //std::cout << "Reward: " << reward << std::endl;
             //double reward = (Q/N);
-            ////std::cout << "ID: " << child->id << " Reward: " << reward << std::endl;
-            ////std::cout << "-- Best Child iter pause -- " << std::endl;
+            //std::cout << "ID: " << child->id << " Reward: " << reward << std::endl;
+            //std::cout << "-- Best Child iter pause -- " << std::endl;
             //std::cin.get();
             if(reward > highest_reward){
                 highest_reward = reward;
@@ -276,16 +265,10 @@ public:
          *   check play is black or white. 
          */
         board::piece_type who = sim_who;
-        ////std::cout << "who: " << who << std::endl;
-        ////std::cout << "sim_who: " << sim_who << std::endl;
+        //std::cout << "who: " << who << std::endl;
+        //std::cout << "sim_who: " << sim_who << std::endl;
         space = who_space_sync(sim_who, space);
         ////std::cout << "sim_who: " << sim_who << std::endl;
-        /*
-        for (size_t i = 0; i < space.size(); i++)
-			space[i] = action::place(i, board::white);
-        */
-
-        //who = board::white;
 
         while(nonterminal(s, space)){
             
