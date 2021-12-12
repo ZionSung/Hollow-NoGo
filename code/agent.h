@@ -24,7 +24,7 @@
 #define N_MCTS 1
 #define T_MCTS 2
 //#define VOTE 3
-#define DEFAULT_SIMULATION_COUNT 200
+#define DEFAULT_SIMULATION_COUNT 1000 // weak judge: 800(600)
 #define MAX_SIMULATION_COUNT 12000
 
 class agent {
